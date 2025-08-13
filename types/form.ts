@@ -1,4 +1,3 @@
-// types/form.ts - Update to match your schema
 export interface FormField {
   id: string;
   name: string;

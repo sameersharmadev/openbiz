@@ -10,9 +10,22 @@ interface PinCodeData {
   district: string;
 }
 
+interface PostOffice {
+  Name: string;
+  State: string;
+  District: string;
+}
+
+interface PinCodeApiResponse {
+  Status: string;
+  PostOffice: PostOffice[];
+}
+
+type FormValue = string | number | boolean;
+
 const UdyamForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<Record<string, FormValue>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [registrationId, setRegistrationId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +35,6 @@ const UdyamForm: React.FC = () => {
 
   const steps: FormStep[] = formSchema.steps as FormStep[];
 
-  // Auto-fill PIN code suggestions
   const fetchPinCodeData = useCallback(async (pincode: string) => {
     if (pincode.length !== 6) {
       setPinCodeSuggestions([]);
@@ -31,12 +43,11 @@ const UdyamForm: React.FC = () => {
 
     setIsLoadingPinCode(true);
     try {
-      // Using PostPin API for PIN code lookup
       const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
-      const data = await response.json();
+      const data: PinCodeApiResponse[] = await response.json();
       
       if (data && data[0] && data[0].Status === 'Success') {
-        const suggestions = data[0].PostOffice.map((office: any) => ({
+        const suggestions = data[0].PostOffice.map((office: PostOffice) => ({
           pincode: pincode,
           city: office.Name,
           state: office.State,
@@ -44,7 +55,6 @@ const UdyamForm: React.FC = () => {
         }));
         setPinCodeSuggestions(suggestions);
         
-        // Auto-fill if only one result
         if (suggestions.length === 1) {
           const suggestion = suggestions[0];
           setFormData(prev => ({
@@ -67,32 +77,30 @@ const UdyamForm: React.FC = () => {
     }
   }, []);
 
-  const validateField = (field: FormField, value: any): string | null => {
+  const validateField = (field: FormField, value: FormValue): string | null => {
     if (field.required && (!value || (typeof value === 'string' && value.trim() === ''))) {
       return field.validation?.required || `${field.label} is required`;
     }
 
     if (field.pattern && value) {
       const regex = new RegExp(field.pattern);
-      if (!regex.test(value)) {
+      if (!regex.test(String(value))) {
         return field.validation?.pattern || 'Invalid format';
       }
     }
 
-    if (field.maxLength && value && value.length > field.maxLength) {
+    if (field.maxLength && value && String(value).length > field.maxLength) {
       return field.validation?.maxLength || `Maximum ${field.maxLength} characters allowed`;
     }
 
     return null;
   };
 
-  const handleInputChange = (fieldId: string, value: any) => {
+  const handleInputChange = (fieldId: string, value: FormValue) => {
     setFormData(prev => ({ ...prev, [fieldId]: value }));
     
-    // Clear errors for this field
     setErrors(prev => ({ ...prev, [fieldId]: '' }));
     
-    // Handle PIN code auto-fill
     if (fieldId === 'pincode' && typeof value === 'string') {
       const cleanPinCode = value.replace(/\D/g, '');
       if (cleanPinCode !== value) {
@@ -107,7 +115,6 @@ const UdyamForm: React.FC = () => {
       }
     }
     
-    // Real-time validation
     const currentStepData = steps[currentStep];
     const field = currentStepData.fields.find(f => f.id === fieldId);
     if (field) {
@@ -132,7 +139,6 @@ const UdyamForm: React.FC = () => {
     const currentStepData = steps[currentStep];
     const stepErrors: Record<string, string> = {};
     
-    // Validate all fields in current step
     currentStepData.fields.forEach(field => {
       const error = validateField(field, formData[field.id]);
       if (error) {
@@ -217,7 +223,7 @@ const UdyamForm: React.FC = () => {
               } ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
               placeholder={field.placeholder}
               maxLength={field.maxLength}
-              value={formData[field.id] || ''}
+              value={String(formData[field.id] || '')}
               onChange={(e) => handleInputChange(field.id, e.target.value)}
               disabled={isSubmitting}
               autoComplete={field.autoComplete || 'off'}
@@ -278,7 +284,7 @@ const UdyamForm: React.FC = () => {
                   ? 'border-red-500 bg-red-50' 
                   : 'border-gray-300 hover:border-gray-400'
               } ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
-              value={formData[field.id] || ''}
+              value={String(formData[field.id] || '')}
               onChange={(e) => handleInputChange(field.id, e.target.value)}
               disabled={isSubmitting}
               tabIndex={field.tabIndex}
@@ -314,7 +320,6 @@ const UdyamForm: React.FC = () => {
     }
   };
 
-  // Progress Tracker Component - Minimal Version
   const ProgressTracker = () => (
     <div className="max-w-6xl mx-auto px-4 mb-6">
       <div className="flex items-center justify-center space-x-8">
@@ -476,7 +481,7 @@ const UdyamForm: React.FC = () => {
                       id={field.id}
                       name={field.name}
                       className="w-3 h-3 mt-1 mr-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 flex-shrink-0"
-                      checked={formData[field.id] || false}
+                      checked={Boolean(formData[field.id])}
                       onChange={(e) => handleInputChange(field.id, e.target.checked)}
                       disabled={isSubmitting}
                       tabIndex={field.tabIndex}

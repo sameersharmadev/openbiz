@@ -1,4 +1,3 @@
-// app/api/submit-step/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { validateAadhaar, validatePAN, validateEntrepreneurName } from '@/utils/validation';
