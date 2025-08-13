@@ -1,0 +1,198 @@
+{
+  "steps": [
+    {
+      "id": "step1",
+      "title": "Aadhaar Verification",
+      "description": "Enter Aadhaar number and validate with OTP",
+      "fields": [
+        {
+          "id": "aadhaarNumber",
+          "name": "aadhaarNumber",
+          "type": "text",
+          "label": "Aadhaar Number / आधार संख्या",
+          "placeholder": "Your Aadhaar No",
+          "maxLength": 12,
+          "required": true,
+          "pattern": "^[0-9]{12}$",
+          "validation": {
+            "required": "Aadhaar number is required",
+            "pattern": "Please enter a valid 12-digit Aadhaar number",
+            "minLength": "Aadhaar number must be 12 digits",
+            "maxLength": "Aadhaar number must be 12 digits"
+          }
+        },
+        {
+          "id": "entrepreneurName",
+          "name": "entrepreneurName",
+          "type": "text",
+          "label": "Name of Entrepreneur / उद्यमी का नाम",
+          "placeholder": "Name as per Aadhaar",
+          "maxLength": 100,
+          "required": true,
+          "validation": {
+            "required": "Entrepreneur name is required",
+            "maxLength": "Name cannot exceed 100 characters"
+          }
+        },
+        {
+          "id": "aadhaarConsent",
+          "name": "aadhaarConsent",
+          "type": "checkbox",
+          "label": "   I, the holder of the above Aadhaar, hereby give my consent to Ministry of MSME, Government of India, for using my Aadhaar number as alloted by UIDAI for Udyam Registration. NIC / Ministry of MSME, Government of India, have informed me that my aadhaar data will not be stored/shared. / मैं, आधार धारक, इस प्रकार उद्यम पंजीकरण के लिए यूआईडीएआई के साथ अपने आधार संख्या का उपयोग करने के लिए सू0ल0म0उ0 मंत्रालय, भारत सरकार को अपनी सहमति देता हूं। एनआईसी / सू0ल0म0उ0 मंत्रालय, भारत सरकार ने मुझे सूचित किया है कि मेरा आधार डेटा संग्रहीत / साझा नहीं किया जाएगा।","required": true,
+          "checked": true,
+          "validation": {
+            "required": "You must consent to proceed"
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "id": "validateAadhaar",
+          "type": "submit",
+          "text": "Validate & Generate OTP",
+          "className": "btn btn-primary",
+          "action": "validateAadhaar"
+        }
+      ]
+    },
+    {
+      "id": "step2",
+      "title": "PAN Validation",
+      "description": "Enter and validate PAN details",
+      "fields": [
+        {
+          "id": "panNumber",
+          "name": "panNumber",
+          "type": "text",
+          "label": "PAN Number",
+          "placeholder": "Enter PAN Number",
+          "maxLength": 10,
+          "required": true,
+          "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+          "validation": {
+            "required": "PAN number is required",
+            "pattern": "Please enter a valid PAN number (5 letters + 4 digits + 1 letter)"
+          }
+        },
+        {
+          "id": "organizationType",
+          "name": "organizationType",
+          "type": "select",
+          "label": "Type of Organization",
+          "required": true,
+          "options": [
+            {
+              "value": "1",
+              "text": "Proprietorship"
+            },
+            {
+              "value": "2",
+              "text": "Partnership"
+            },
+            {
+              "value": "3",
+              "text": "Hindu Undivided Family"
+            },
+            {
+              "value": "4",
+              "text": "Private Limited Company"
+            },
+            {
+              "value": "5",
+              "text": "Public Limited Company"
+            },
+            {
+              "value": "6",
+              "text": "Limited Liability Partnership"
+            },
+            {
+              "value": "7",
+              "text": "Cooperative Society"
+            },
+            {
+              "value": "8",
+              "text": "Society"
+            },
+            {
+              "value": "9",
+              "text": "Trust"
+            },
+            {
+              "value": "10",
+              "text": "Self Help Group"
+            },
+            {
+              "value": "11",
+              "text": "Others"
+            }
+          ],
+          "validation": {
+            "required": "Please select organization type"
+          }
+        },
+        {
+          "id": "pincode",
+          "name": "txtPinCode",
+          "type": "text",
+          "label": "PIN Code",
+          "placeholder": "Enter 6-digit PIN code",
+          "maxLength": 6,
+          "required": true,
+          "pattern": "^[0-9]{6}$",
+          "validation": {
+            "required": "PIN code is required",
+            "pattern": "Please enter a valid 6-digit PIN code"
+          }
+        },
+        {
+          "id": "city",
+          "name": "txtCity",
+          "type": "text",
+          "label": "City",
+          "placeholder": "City (auto-filled)"
+        },
+        {
+          "id": "state",
+          "name": "txtState",
+          "type": "text",
+          "label": "State",
+          "placeholder": "State (auto-filled)"
+        }
+      ],
+      "buttons": [
+        {
+          "id": "validatePan",
+          "type": "submit",
+          "text": "Validate PAN",
+          "className": "btn btn-primary",
+          "action": "validatePan"
+        }
+      ]
+    }
+  ],
+  "validationRules": {
+    "aadhaar": {
+      "pattern": "^[0-9]{12}$",
+      "message": "Please enter a valid 12-digit Aadhaar number"
+    },
+    "pan": {
+      "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+      "message": "Please enter a valid PAN number (Format: ABCDE1234F)"
+    },
+    "mobile": {
+      "pattern": "^[0-9]{10}$",
+      "message": "Please enter a valid 10-digit mobile number"
+    },
+    "email": {
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+      "message": "Please enter a valid email address"
+    }
+  },
+  "uiConfig": {
+    "theme": "bootstrap",
+    "responsive": true,
+    "progressTracker": true,
+    "autoSave": false,
+    "realTimeValidation": true
+  }
+}

@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UdyamRegistration {
+  id                 String   @id @default(cuid())
+  aadhaarNumber      String?  @db.VarChar(12)
+  entrepreneurName   String?  @db.VarChar(100)
+  panNumber          String?  @db.VarChar(10)
+  organizationType   String?  @db.VarChar(50)
+  aadhaarConsent     Boolean  @default(false)
+  stepCompleted      Int      @default(1)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("UdyamRegistration")
+}

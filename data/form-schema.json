@@ -1,0 +1,282 @@
+{
+  "metadata": {
+    "scraped_at": "2025-08-13T03:26:06.742Z",
+    "source_url": "https://udyamregistration.gov.in/UdyamRegistration.aspx",
+    "scraper_version": "1.0.0"
+  },
+  "formSteps": [
+    {
+      "step": 1,
+      "title": "Aadhaar Verification With OTP",
+      "description": "Aadhaar number validation and OTP generation",
+      "fields": [
+        "txtadharno",
+        "txtownername",
+        "chkDecarationA",
+        "btnValidateAadhaar"
+      ],
+      "validationGroup": "X"
+    }
+  ],
+  "validationRules": {
+    "dateValidations": [
+      {
+        "function": "function calc_dateIncop",
+        "description": "Date validation function"
+      },
+      {
+        "function": "function calc_dateComes",
+        "description": "Date validation function"
+      },
+      {
+        "function": "function calc_dateDob",
+        "description": "Date validation function"
+      }
+    ],
+    "mobilePattern": "XXXXXXXXXX",
+    "mobileRegex": "/^[0-9]{10}$/",
+    "mobileDescription": "10 digit mobile number",
+    "emailRegex": "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/",
+    "emailDescription": "Valid email format"
+  },
+  "uiComponents": {
+    "buttons": [
+      {
+        "id": "ctl00_ContentPlaceHolder1_btnValidateAadhaar",
+        "text": "Validate & Generate OTP",
+        "type": "submit",
+        "className": "btn btn-primary",
+        "onclick": "javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(\"ctl00$ContentPlaceHolder1$btnValidateAadhaar\", \"\", true, \"X\", \"\", false, false))"
+      }
+    ],
+    "checkboxes": [
+      {
+        "id": "ctl00_ContentPlaceHolder1_chkDecarationA",
+        "name": "ctl00$ContentPlaceHolder1$chkDecarationA",
+        "checked": true,
+        "label": ""
+      }
+    ],
+    "radioButtons": [],
+    "dropdowns": [],
+    "progressIndicators": [],
+    "modals": [],
+    "alerts": []
+  },
+  "formFields": {
+    "__VIEWSTATE": {
+      "id": "__VIEWSTATE",
+      "name": "__VIEWSTATE",
+      "type": "hidden",
+      "className": "",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": null,
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    },
+    "__VIEWSTATEGENERATOR": {
+      "id": "__VIEWSTATEGENERATOR",
+      "name": "__VIEWSTATEGENERATOR",
+      "type": "hidden",
+      "className": "",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": null,
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    },
+    "__VIEWSTATEENCRYPTED": {
+      "id": "__VIEWSTATEENCRYPTED",
+      "name": "__VIEWSTATEENCRYPTED",
+      "type": "hidden",
+      "className": "",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": null,
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    },
+    "__EVENTVALIDATION": {
+      "id": "__EVENTVALIDATION",
+      "name": "__EVENTVALIDATION",
+      "type": "hidden",
+      "className": "",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": null,
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    },
+    "ctl00_ContentPlaceHolder1_txtadharno": {
+      "id": "ctl00_ContentPlaceHolder1_txtadharno",
+      "name": "ctl00$ContentPlaceHolder1$txtadharno",
+      "type": "text",
+      "className": "form-control",
+      "placeholder": "Your Aadhaar No",
+      "maxLength": "12",
+      "tabIndex": "1",
+      "required": false,
+      "autoComplete": "Off",
+      "pattern": "",
+      "label": "1. Aadhaar Number/ आधार संख्या"
+    },
+    "ctl00_ContentPlaceHolder1_txtownername": {
+      "id": "ctl00_ContentPlaceHolder1_txtownername",
+      "name": "ctl00$ContentPlaceHolder1$txtownername",
+      "type": "text",
+      "className": "form-control",
+      "placeholder": "Name as per Aadhaar",
+      "maxLength": "100",
+      "tabIndex": "2",
+      "required": false,
+      "autoComplete": "Off",
+      "pattern": "",
+      "label": "2. Name of Entrepreneur / उद्यमी का नाम"
+    },
+    "ctl00_ContentPlaceHolder1_chkDecarationA": {
+      "id": "ctl00_ContentPlaceHolder1_chkDecarationA",
+      "name": "ctl00$ContentPlaceHolder1$chkDecarationA",
+      "type": "checkbox",
+      "className": "",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": "3",
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    },
+    "ctl00_ContentPlaceHolder1_btnValidateAadhaar": {
+      "id": "ctl00_ContentPlaceHolder1_btnValidateAadhaar",
+      "name": "ctl00$ContentPlaceHolder1$btnValidateAadhaar",
+      "type": "submit",
+      "className": "btn btn-primary",
+      "placeholder": "",
+      "maxLength": null,
+      "tabIndex": "4",
+      "required": false,
+      "autoComplete": "",
+      "pattern": ""
+    }
+  },
+  "errorMessages": {},
+  "jsValidations": [
+    {
+      "type": "validation_function",
+      "content": "function ValidateDate(osrc, args) {\n            var dt = args.Value\n            if (isDate(dt) == false) {\n\n                args.IsValid = false;\n                return false\n            }",
+      "name": "ValidateDate"
+    },
+    {
+      "type": "validation_function",
+      "content": "function resetValidationState() {\n            window.Page_BlockSubmit = false;\n        }",
+      "name": "resetValidationState"
+    },
+    {
+      "type": "confirmation",
+      "content": [
+        "confirm('Are you sure that you have entered correct data. Please check your mobile number is correct?')",
+        "confirm('Are you sure that you have entered correct data. After submit you will not able to change data?')"
+      ]
+    },
+    {
+      "type": "validation_function",
+      "content": "function ClientValidatePan(source, arguments) {\n\n            var txt = document.getElementById('ctl00_ContentPlaceHolder1_txtPan');\n            var ddl = document.getElementById('ctl00_ContentPlaceHolder1_ddlTypeofOrg');\n            var decision = ddl.value;\n            if (decision == \"2\" || decision == \"3\" || decision == \"4\" || decision == \"5\" || decision == \"6\" || decision == \"7\" || decision == \"8\" || decision == \"9\" || decision == \"10\" || decision == \"11\") {\n                if (txt.value == '') {\n                    arguments.IsValid = false;\n                    return false;\n                }",
+      "name": "ClientValidatePan"
+    },
+    {
+      "type": "validation_function",
+      "content": "function ValidateTurnover(source, args) {\n        //var TTurnoverA = document.getElementById('ctl00_ContentPlaceHolder1_txtTotalTurnoverA').value;\n\n\n        // if (TTurnoverA.value > 4000000) {\n        //args.IsValid = false;\n        // return false;\n        //  }",
+      "name": "ValidateTurnover"
+    },
+    {
+      "type": "validation_function",
+      "content": "function ValidateTurnover(source, args) {\n            var chkLista = document.getElementById(\"ctl00_ContentPlaceHolder1_rblWhetherGstn\").getElementsByTagName(\"input\");\n            var TTurnoverA = document.getElementById(\"ctl00_ContentPlaceHolder1_txtTotalTurnoverA\").value;\n            if (TTurnoverA > 4000000 && chkLista[1].checked) {\n                args.IsValid = false;\n                return false;\n            }",
+      "name": "ValidateTurnover"
+    }
+  ],
+  "cssClasses": [
+    "fixed-top",
+    "header-inner-pages",
+    "container-fluid",
+    "row",
+    "justify-content-center",
+    "col-xl-10",
+    "d-flex",
+    "align-items-center",
+    "logo",
+    "mr-auto",
+    "nav-menu",
+    "d-none",
+    "d-lg-block",
+    "active",
+    "drop-down",
+    "breadcrumbs",
+    "container",
+    "justify-content-between",
+    "inner-page",
+    "col-md-12",
+    "form-group",
+    "card",
+    "card-primary",
+    "card-header",
+    "card-title",
+    "card-body",
+    "col-md-6",
+    "form-control",
+    "checkbox",
+    "btn",
+    "btn-primary",
+    "sk-spinner",
+    "sk-spinner-wave",
+    "sk-rect1",
+    "sk-rect2",
+    "sk-rect3",
+    "sk-rect4",
+    "sk-rect5",
+    "footer-top",
+    "col-lg-4",
+    "footer-contact",
+    "footer-links",
+    "bx",
+    "bx-chevron-right",
+    "footer-newsletter",
+    "copyright-wrap",
+    "d-md-flex",
+    "py-4",
+    "mr-md-auto",
+    "text-center",
+    "text-md-left",
+    "copyright",
+    "credits",
+    "1",
+    "social-links",
+    "text-md-right",
+    "pt-3",
+    "pt-md-0",
+    "twitter",
+    "facebook",
+    "instagram",
+    "back-to-top",
+    "icofont-simple-up"
+  ],
+  "apiEndpoints": [
+    {
+      "url": "UdyamRegistration.aspx/CheckEmail",
+      "type": "ajax"
+    },
+    {
+      "url": "UdyamRegistration.aspx/CheckMobile",
+      "type": "ajax"
+    },
+    {
+      "url": "./UdyamRegistration.aspx",
+      "type": "main_form"
+    }
+  ],
+  "dropdownOptions": {},
+  "eventHandlers": {}
+}
